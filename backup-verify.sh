@@ -11,7 +11,7 @@ fi
 
 # For PyDrive credentials
 cd /root/.duplicity/
-source /root/.duplicity/conf
+source /root/.duplicity/config
 
 if [[ "${#}" -eq 0 ]]; then
   echo "Missing argument:"

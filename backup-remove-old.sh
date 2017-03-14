@@ -14,7 +14,7 @@ fi
 MSG=""
 ERROR=0
 ERROR_MSG=""
-ERROR_LOG="/tmp/error_log.${$}.txt"
+ERROR_LOG="/root/.duplicity/logs/duplicity-errors.${$}.log"
 TYPE="Remove old"
 
 # Redirect all stderr to error logfile
@@ -22,15 +22,15 @@ exec 2>${ERROR_LOG}
 
 # For PyDrive credentials
 cd /root/.duplicity/
-source /root/.duplicity/conf
-source /usr/local/sbin/includes.sh
+source /root/.duplicity/config
+source /root/.duplicity/scripts/includes.sh
 
 setup
 
 for SRC_DIR in ${BACKDIRS}; do
   REMOVE_SRC_DIR="${SRC_DIR//\//-}"
   DEST_DIR="${REMOTE_DIR}/${REMOVE_SRC_DIR}"
-  LOG_FILE="/var/log/backup/duplicity-remove-old-${REMOVE_SRC_DIR}.log"
+  LOG_FILE="/root/.duplicity/logs/duplicity-remove-old-${REMOVE_SRC_DIR}.log"
 
   echo  "========================= Removing old backup sets for ${HOSTNAME}/${SRC_DIR} $(date) =========================" >> "${LOG_FILE}"
   duplicity ${REMOVE_OPTS} ${COMMON_OPTS} ${DEST_DIR} >> "${LOG_FILE}"

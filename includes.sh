@@ -62,12 +62,8 @@ function setup() {
   trap cleanup EXIT
   trap 'err_report ${LINENO} ${?}' ERR
 
-  if [[ ! -d /var/backup ]]; then
-    mkdir /var/backup
-  fi
-
-  if [[ ! -d /var/log/backup ]]; then
-    mkdir /var/log/backup
+  if [[ ! -d /root/.duplicity/logs ]]; then
+    mkdir /root/.duplicity/logs
   fi
 
   notify_users_start
@@ -75,18 +71,18 @@ function setup() {
 
 function notify_users_start() {
   if [ -e /usr/bin/notify-send ]; then
-    /usr/local/sbin/user-notification.sh "emblem-generic" "Duplicity backup" "... Backup is starting"
+    /root/.duplicity/scripts/user-notification.sh "emblem-generic" "Duplicity backup" "... Backup is starting"
   fi
 }
 
 function notify_users_done() {
   if [ -e /usr/bin/notify-send ]; then
-    /usr/local/sbin/user-notification.sh "emblem-generic" "Duplicity backup" "... Backup completed"
+    /root/.duplicity/scripts/user-notification.sh "emblem-generic" "Duplicity backup" "... Backup completed"
   fi
 }
 
 function notify_users_error() {
   if [ -e /usr/bin/notify-send ]; then
-    /usr/local/sbin/user-notification.sh "emblem-urgent" "Duplicity backup" "... Backup failed!"
+    /root/.duplicity/scripts/user-notification.sh "emblem-urgent" "Duplicity backup" "... Backup failed!"
   fi
 }

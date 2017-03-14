@@ -11,7 +11,7 @@ fi
 # For PyDrive credentials
 cd /root/.duplicity/
 # shellcheck disable=SC1091
-source /root/.duplicity/conf
+source /root/.duplicity/config
 
 if [[ "${#}" -ne 3 ]]; then
   echo "3 arguments are needed:"
