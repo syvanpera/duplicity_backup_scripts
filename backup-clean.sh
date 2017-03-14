@@ -14,7 +14,7 @@ fi
 MSG=""
 ERROR=0
 ERROR_MSG=""
-ERROR_LOG="/root/.duplicity/.logs/duplicity-errors.${$}.log"
+ERROR_LOG="/root/.duplicity/logs/duplicity-errors.${$}.log"
 TYPE="Cleanup"
 
 # Redirect all stderr to error logfile

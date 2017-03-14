@@ -19,7 +19,7 @@ export BACKUP_OPTS="--full-if-older-than 6M --volsize 256 --asynchronous-upload"
 export REMOVE_OPTS="remove-all-but-n-full 2 --force"
 
 # Dirs to backup, without leading '/'
-export BACKDIRS="/backup"
+export BACKDIRS="backup"
 export LOCK_FILE="/tmp/noshutdown-backup-${$}.lock"
 
 # Default if net set is to notify about completion and failure by popup and mail
