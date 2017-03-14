@@ -73,46 +73,6 @@ function setup() {
   notify_users_start
 }
 
-function dump_disk_info() {
-  rm -f /var/backup/partition_info.txt
-  rm -f /var/backup/fs_info.txt
-  touch /var/backup/partition_info.txt
-  touch /var/backup/fs_info.txt
-  touch /var/backup/raid_info.txt
-
-  # TODO:
-  # Only match ext3 partitions
-  # Breaks if vfat, should also match /dev/md*
-  # for partition in $(blkid | grep -E '/dev/sd.*TYPE="ext4"' | cut -f1 -d":"); do
-  #   if [[ ${partition} != 'swap' ]]; then
-  #     dumpe2fs -h ${partition} >> /var/backup/fs_info.txt 2>/dev/null
-  #   fi
-  # done
-
-  # Dump partition info, needs name of disks else it will fail. Append "|| true" to ignore
-  # Requires sfdisk
-  if command -v "sfdisk" &>/dev/null; then
-    for DISK in $(lsblk -ndro KNAME,TYPE | awk '$2 ~ /disk/ { print $1 }'); do
-      sfdisk --dump /dev/${DISK} >> /var/backup/partition_info.txt
-    done
-  else
-    echo "No sfdisk installed"
-  fi
-
-  # Dump raid meta data
-  if command -v "mdadm" &>/dev/null; then
-    # Ignore return value greater than 0
-    mdadm -Evvvvs >> /var/backup/raid_info.txt || true
-  fi
-}
-
-# Arch Linux package list
-function dump_package_list() {
-  if [ -f /etc/arch-release ]; then
-    pacman -Q | gzip > /var/backup/packages.txt.gz
-  fi
-}
-
 function notify_users_start() {
   if [ -e /usr/bin/notify-send ]; then
     /usr/local/sbin/user-notification.sh "emblem-generic" "Duplicity backup" "... Backup is starting"
