@@ -28,7 +28,9 @@ if [[ -n ${TIME} ]]; then
   ARGS="--time ${TIME}"
 fi
 
-duplicity list-current-files ${ARGS} ${COMMON_OPTS} "${REMOTE_DIR}/${DIR}"
+CLEAN_DIR=${DIR//\//-}
+
+duplicity list-current-files ${ARGS} ${COMMON_OPTS} "${REMOTE_DIR}/${CLEAN_DIR}"
 
 unset PASSPHRASE
 unset DPBX_ACCESS_TOKEN

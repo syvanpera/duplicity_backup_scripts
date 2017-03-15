@@ -23,9 +23,11 @@ fi
 
 FILE=${1:-}
 DIR=${2:-}
+CLEAN_DIR=${DIR//\//-}
 RESTORE_DEST=${3:-}
 
-duplicity ${COMMON_OPTS} --file-to-restore "${FILE}" "${REMOTE_DIR}/${DIR}" "${RESTORE_DEST}"
+echo duplicity ${COMMON_OPTS} --file-to-restore "${FILE}" "${REMOTE_DIR}/${CLEAN_DIR}" "${RESTORE_DEST}"
+duplicity ${COMMON_OPTS} --file-to-restore "${FILE}" "${REMOTE_DIR}/${CLEAN_DIR}" "${RESTORE_DEST}"
 
 unset PASSPHRASE
 unset ENCRYPT_KEY

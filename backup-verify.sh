@@ -20,8 +20,9 @@ if [[ "${#}" -eq 0 ]]; then
 fi
 
 DIR=${1:-}
+CLEAN_DIR=${DIR//\//-}
 
-duplicity verify $COMMON_OPTS "${REMOTE_DIR}/${DIR}" "/${DIR}"
+duplicity verify $COMMON_OPTS "${REMOTE_DIR}/${CLEAN_DIR}" "/${DIR}"
 
 unset PASSPHRASE
 unset GOOGLE_DRIVE_SETTINGS

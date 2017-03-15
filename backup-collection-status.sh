@@ -20,5 +20,6 @@ if [[ "${#}" -eq 0 ]]; then
 fi
 
 DIR=${1:-}
+CLEAN_DIR=${DIR//\//-}
 
-duplicity collection-status ${COMMON_OPTS} "${REMOTE_DIR}/${DIR}"
+duplicity collection-status ${COMMON_OPTS} "${REMOTE_DIR}/${CLEAN_DIR}"
