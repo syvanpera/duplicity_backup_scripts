@@ -35,10 +35,14 @@ for SRC_DIR in ${BACKDIRS}; do
   echo  "========================= Starting backup of ${HOSTNAME}/${SRC_DIR} $(date) =========================" >> "${LOG_FILE}"
   # Pr dir exclude list
   DIR_EXCLUDE=""
-  if [[ -f "/root/.duplicity/exclude-${CLEAN_SRC_DIR}-${HOSTNAME}" ]]; then
-    DIR_EXCLUDE="--exclude-filelist=/root/.duplicity/exclude-${CLEAN_SRC_DIR}-${HOSTNAME}"
+  if [[ -f "/root/.duplicity/exclude-${CLEAN_SRC_DIR}" ]]; then
+    DIR_EXCLUDE="--exclude-filelist=/root/.duplicity/exclude-${CLEAN_SRC_DIR}"
     export DIR_EXCLUDE
   fi
-  duplicity incr ${EXCLUDE_OPTS} ${DIR_EXCLUDE} ${COMMON_OPTS} ${BACKUP_OPTS} /${SRC_DIR} ${DEST_DIR} >> "${LOG_FILE}"
+  ENCRYPT_OPT="--no-encryption"
+  if [[ "${ENCRYPTDIRS}" =~ $SRC_DIR ]]; then
+    ENCRYPT_OPT=""
+  fi
+  duplicity incr ${EXCLUDE_OPTS} ${DIR_EXCLUDE} ${ENCRYPT_OPT} ${COMMON_OPTS} ${BACKUP_OPTS} /${SRC_DIR} ${DEST_DIR} >> "${LOG_FILE}"
   MSG="${MSG}\n- ${SRC_DIR} => ${DEST_DIR}"
 done

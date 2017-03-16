@@ -43,4 +43,5 @@ unset EXCLUDE_OPTS
 unset DIR_EXCLUDE
 unset REMOTE_DIR
 unset BACKDIRS
+unset ENCRYPTDIRS
 unset EMAIL
