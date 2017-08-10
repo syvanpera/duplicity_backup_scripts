@@ -28,7 +28,12 @@ source /root/.duplicity/scripts/includes.sh
 setup
 
 for SRC_DIR in ${BACKDIRS}; do
+  ORIGINAL_SRC_DIR=${SRC_DIR}
   CLEAN_SRC_DIR=${SRC_DIR//\//-}
+  if [[ "${SRC_DIR}" = "/" ]]; then
+    CLEAN_SRC_DIR="root"
+    SRC_DIR=""
+  fi
   DEST_DIR=${REMOTE_DIR}/${CLEAN_SRC_DIR}
   LOG_FILE="/root/.duplicity/logs/duplicity-${CLEAN_SRC_DIR}.log"
 
@@ -40,7 +45,7 @@ for SRC_DIR in ${BACKDIRS}; do
     export DIR_EXCLUDE
   fi
   ENCRYPT_OPT="--no-encryption"
-  if [[ "${ENCRYPTDIRS}" =~ $SRC_DIR ]]; then
+  if [[ "${ENCRYPTDIRS}" =~ $ORIGINAL_SRC_DIR ]]; then
     ENCRYPT_OPT=""
   fi
   duplicity incr ${EXCLUDE_OPTS} ${DIR_EXCLUDE} ${ENCRYPT_OPT} ${COMMON_OPTS} ${BACKUP_OPTS} /${SRC_DIR} ${DEST_DIR} >> "${LOG_FILE}"
